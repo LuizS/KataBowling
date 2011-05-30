@@ -14,7 +14,7 @@ namespace BowlingKata
         {
             Game game = new Game();
 
-            for (int i = 1; i <= 20; i++ )
+            for (int i = 1; i <= 20; i++)
                 game.Roll(0);
 
             Assert.That(game.Score, Is.EqualTo(0));
@@ -30,13 +30,24 @@ namespace BowlingKata
 
             Assert.That(game.Score, Is.EqualTo(20));
         }
+        
+        [Test]
+        public void Score_Game_With_Spares_Only()
+        {
+            Game game = new Game();
+
+            for (int i = 1; i <= 21; i++)
+                game.Roll(5);
+
+            Assert.That(game.Score, Is.EqualTo(150));
+        }
     }
 
     public class Game
     {
         public void Roll(int i)
         {
-            Score = Score += i;
+            Score += i;
         }
 
         public int Score { get; private set; }
