@@ -65,6 +65,8 @@ namespace BowlingKata
                 Frames.Last().AddSecondRoll(i);
             }
 
+            AddBonus(i);
+
             if (Frames.Last().IsStrike)
             {
                 BonusFrames.Add(BonusFrame.AddStrike(Frames.Last()));
@@ -73,6 +75,11 @@ namespace BowlingKata
             {
                 BonusFrames.Add(BonusFrame.AddSpare(Frames.Last()));
             }
+        }
+
+        public void AddBonus(int i)
+        {
+            this.BonusFrames.ForEach(b => b.ComputeBonus(i));
         }
 
         public int Score
@@ -110,6 +117,16 @@ namespace BowlingKata
         public static BonusFrame AddSpare(Frame openFrame)
         {
             return new BonusFrame {BonusRolls = 1, Frame = openFrame};
+        }
+
+        public void ComputeBonus(int i)
+        {
+            if (BonusRolls > 0)
+            {
+                this.Frame.AddBonus(i);
+                BonusRolls--;
+            }
+            
         }
     }
 
