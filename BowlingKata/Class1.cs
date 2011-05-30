@@ -36,7 +36,7 @@ namespace BowlingKata
     {
         public void Roll(int i)
         {
-            Score++;
+            Score = Score += i;
         }
 
         public int Score { get; private set; }
