@@ -57,12 +57,17 @@ namespace BowlingKata
 
         public void Roll(int i)
         {
-            if ((Frames.Count() == 0  || Frames.Last().FrameIsClosed) && Frames.Count <= 10)
+            if (Frames.Count < 10 || Frames.Last().FrameIsClosed == false)
             {
-                Frames.Add(new Frame(i));
-            }else if(Frames.Count <= 10)
-            {
-                Frames.Last().AddSecondRoll(i);
+                if (Frames.Count() == 0 || Frames.Last().FrameIsClosed)
+                {
+                    Frames.Add(new Frame(i));
+                }
+                else
+                {
+                    Frames.Last().AddSecondRoll(i);
+                }
+
             }
 
             AddBonus(i);
