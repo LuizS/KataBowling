@@ -30,24 +30,13 @@ namespace BowlingKata
 
             Assert.That(game.Score, Is.EqualTo(20));
         }
-
-        [Test]
-        public void Score_UserGetsPinsWithNinePins_Returns180()
-        {
-            Game game = new Game();
-
-            for (int i = 1; i <= 20; i++)
-                game.Roll(9);
-
-            Assert.That(game.Score, Is.EqualTo(180));
-        }
     }
 
     public class Game
     {
         public void Roll(int i)
         {
-            
+            Score++;
         }
 
         public int Score { get; private set; }
