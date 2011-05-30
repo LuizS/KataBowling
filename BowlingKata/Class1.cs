@@ -49,6 +49,7 @@ namespace BowlingKata
         public Game()
         {
             Frames = new List<Frame>();
+            BonusFrames = new List<BonusFrame>();
         }
 
         public List<Frame> Frames{ get; set; }
