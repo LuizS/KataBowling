@@ -43,13 +43,20 @@ namespace BowlingKata
         }
     }
 
+
     public class Game
     {
+        public Game()
+        {
+            Rolls = new List<int>();
+        }
+        public List<int> Rolls{ get; set; }
         public void Roll(int i)
         {
-            Score += i;
+            Rolls.Add(i);
         }
 
-        public int Score { get; private set; }
+        public int Score { get { return Rolls.Sum(); }
+        }
     }
 }
