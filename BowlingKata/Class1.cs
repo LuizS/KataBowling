@@ -48,15 +48,51 @@ namespace BowlingKata
     {
         public Game()
         {
-            Rolls = new List<int>();
-        }
-        public List<int> Rolls{ get; set; }
-        public void Roll(int i)
-        {
-            Rolls.Add(i);
+            Frames = new List<Frame>();
         }
 
-        public int Score { get { return Rolls.Sum(); }
+        public List<Frame> Frames{ get; set; }
+        private Frame openFrame;
+
+        public void Roll(int i)
+        {
+            if (openFrame == null)
+                openFrame = new Frame(i);
+            else
+                openFrame.AddSecondRoll(i);
         }
+
+        public int Score
+        {
+            get { return CalculateScore(); }
+        }
+
+        private int CalculateScore()
+        {
+            int sum = 0;
+            foreach (var frame in Frames)
+            {
+                sum += frame.FrameScore;
+            }
+
+            return sum;
+        }
+    }
+
+    public class Frame
+    {
+        private int firstRoll, secondRoll;
+
+        public Frame(int firstRoll)
+        {
+            this.firstRoll = firstRoll;
+        }
+
+        public void AddSecondRoll(int secondRoll)
+        {
+            this.secondRoll = secondRoll;
+        }
+
+        public int FrameScore { get { return firstRoll + secondRoll; } }
     }
 }
