@@ -52,22 +52,25 @@ namespace BowlingKata
         }
 
         public List<Frame> Frames{ get; set; }
-        private Frame openFrame;
         private List<BonusFrame> BonusFrames { get; set; }
 
         public void Roll(int i)
         {
-            if (openFrame == null)
-                openFrame = new Frame(i);
-            else
-                openFrame.AddSecondRoll(i);
-            if (openFrame.IsStrike)
+            if (Frames.Count() == 0 || Frames.Last().FrameIsClosed)
             {
-                BonusFrames.Add(BonusFrame.AddStrike(openFrame));
+                Frames.Add(new Frame(i));
+            }else
+            {
+                Frames.Last().AddSecondRoll(i);
             }
-            if (openFrame.IsSpare)
+
+            if (Frames.Last().IsStrike)
             {
-                BonusFrames.Add(BonusFrame.AddSpare(openFrame));
+                BonusFrames.Add(BonusFrame.AddStrike(Frames.Last()));
+            }
+            if (Frames.Last().IsSpare)
+            {
+                BonusFrames.Add(BonusFrame.AddSpare(Frames.Last()));
             }
         }
 
@@ -111,7 +114,8 @@ namespace BowlingKata
 
     public class Frame
     {
-        private int firstRoll, secondRoll;
+        private int firstRoll;
+        private int? secondRoll;
         private int bonus;
 
         public Frame(int firstRoll)
@@ -129,10 +133,15 @@ namespace BowlingKata
             this.bonus += bonus;
         }
 
+        public bool FrameIsClosed
+        {
+            get { return  IsStrike || secondRoll.HasValue; }
+        }
+
         public bool IsSpare {get { return this.firstRoll + this.secondRoll == 10 && this.secondRoll > 0; }
         }
 
         public bool IsStrike { get { return this.firstRoll == 10; } }
-        public int FrameScore { get { return firstRoll + secondRoll + bonus; } }
+        public int FrameScore { get { return firstRoll + (secondRoll.HasValue ? secondRoll.Value : 0) + bonus; } }
     }
 }
