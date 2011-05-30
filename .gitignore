@@ -1,0 +1,9 @@
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+_ReSharper.*/
+packages/
+*.suo
+*.[Cc]ache
+*.user
