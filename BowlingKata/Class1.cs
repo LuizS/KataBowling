@@ -53,6 +53,7 @@ namespace BowlingKata
 
         public List<Frame> Frames{ get; set; }
         private Frame openFrame;
+        private List<BonusFrame> BonusFrames { get; set; }
 
         public void Roll(int i)
         {
@@ -60,11 +61,19 @@ namespace BowlingKata
                 openFrame = new Frame(i);
             else
                 openFrame.AddSecondRoll(i);
+            if (openFrame.IsStrike)
+            {
+                BonusFrames.Add(BonusFrame.AddStrike(openFrame));
+            }
+            if (openFrame.IsSpare)
+            {
+                BonusFrames.Add(BonusFrame.AddSpare(openFrame));
+            }
         }
 
         public int Score
         {
-            get { return CalculateScore(); }
+            get { return this.Frames.Sum(f => f.FrameScore); }
         }
 
         private int CalculateScore()
@@ -79,9 +88,31 @@ namespace BowlingKata
         }
     }
 
+    internal class BonusFrame
+    {
+        private int BonusRolls;
+
+        public Frame Frame
+    {
+        get;
+        set;
+    }
+
+        public static BonusFrame AddStrike(Frame openFrame)
+        {
+            return new BonusFrame {BonusRolls = 2, Frame = openFrame};
+        }
+
+        public static BonusFrame AddSpare(Frame openFrame)
+        {
+            return new BonusFrame {BonusRolls = 1, Frame = openFrame};
+        }
+    }
+
     public class Frame
     {
         private int firstRoll, secondRoll;
+        private int bonus;
 
         public Frame(int firstRoll)
         {
@@ -93,6 +124,15 @@ namespace BowlingKata
             this.secondRoll = secondRoll;
         }
 
-        public int FrameScore { get { return firstRoll + secondRoll; } }
+        public void AddBonus(int bonus)
+        {
+            this.bonus += bonus;
+        }
+
+        public bool IsSpare {get { return this.firstRoll + this.secondRoll == 10 && this.secondRoll > 0; }
+        }
+
+        public bool IsStrike { get { return this.firstRoll == 10; } }
+        public int FrameScore { get { return firstRoll + secondRoll + bonus; } }
     }
 }
