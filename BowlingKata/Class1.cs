@@ -95,7 +95,7 @@ namespace BowlingKata
 
             AddBonus(i);
 
-            if (Frames.Last().IsStrike)
+            if (Frames.Last().IsStrike && Frames.Count<=10)
             {
                 BonusFrames.Add(BonusFrame.AddStrike(Frames.Last()));
             }
