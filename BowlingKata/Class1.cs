@@ -41,6 +41,19 @@ namespace BowlingKata
 
             Assert.That(game.Score, Is.EqualTo(150));
         }
+
+
+        [Test]
+        public void Score_TwoStrikes_AndRestOne()
+        {
+            Game game = new Game();
+            game.Roll(10);
+            game.Roll(10);
+            for (int i = 1; i <= 18; i++)
+                game.Roll(1);
+
+            Assert.That(game.Score, Is.EqualTo(51));
+        }
     }
 
 
