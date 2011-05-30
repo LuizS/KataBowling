@@ -49,10 +49,10 @@ namespace BowlingKata
             Game game = new Game();
             game.Roll(10);
             game.Roll(10);
-            for (int i = 1; i <= 18; i++)
+            for (int i = 1; i <= 16; i++)
                 game.Roll(1);
 
-            Assert.That(game.Score, Is.EqualTo(51));
+            Assert.That(game.Score, Is.EqualTo(49));
         }
     }
 
