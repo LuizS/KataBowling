@@ -44,6 +44,20 @@ namespace BowlingKata
 
 
         [Test]
+        public void Score_Game_With_Nines_And_Miss_Only()
+        {
+            Game game = new Game();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                game.Roll(9);
+                game.Roll(0);
+            }
+
+            Assert.That(game.Score, Is.EqualTo(90));
+        }
+
+        [Test]
         public void Score_TwoStrikes_AndRestOne()
         {
             Game game = new Game();
