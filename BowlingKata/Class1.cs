@@ -25,7 +25,7 @@ namespace BowlingKata
     {
         public void Roll(int i)
         {
-            throw new NotImplementedException();
+            
         }
 
         public int Score { get; private set; }
