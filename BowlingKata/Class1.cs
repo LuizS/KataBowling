@@ -60,7 +60,7 @@ namespace BowlingKata
             if (Frames.Count() == 0 || Frames.Last().FrameIsClosed)
             {
                 Frames.Add(new Frame(i));
-            }else
+            }else if (Frames.Count() <= 10)
             {
                 Frames.Last().AddSecondRoll(i);
             }
