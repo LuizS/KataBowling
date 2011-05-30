@@ -133,45 +133,30 @@ namespace BowlingKata
         {
             get { return this.Frames.Sum(f => f.FrameScore); }
         }
-
-        private int CalculateScore()
-        {
-            int sum = 0;
-            foreach (var frame in Frames)
-            {
-                sum += frame.FrameScore;
-            }
-
-            return sum;
-        }
     }
 
     internal class BonusFrame
     {
-        private int BonusRolls;
+        private int countOfBonusRolls;
 
-        public Frame Frame
-    {
-        get;
-        set;
-    }
+        public Frame Frame { get; set; }
 
-        public static BonusFrame AddStrike(Frame openFrame)
+        public static BonusFrame AddStrike(Frame frame)
         {
-            return new BonusFrame {BonusRolls = 2, Frame = openFrame};
+            return new BonusFrame {countOfBonusRolls = 2, Frame = frame};
         }
 
-        public static BonusFrame AddSpare(Frame openFrame)
+        public static BonusFrame AddSpare(Frame frame)
         {
-            return new BonusFrame {BonusRolls = 1, Frame = openFrame};
+            return new BonusFrame {countOfBonusRolls = 1, Frame = frame};
         }
 
         public void ComputeBonus(int i)
         {
-            if (BonusRolls > 0)
+            if (countOfBonusRolls > 0)
             {
                 this.Frame.AddBonus(i);
-                BonusRolls --;
+                countOfBonusRolls --;
             }
             
         }
@@ -203,10 +188,13 @@ namespace BowlingKata
             get { return  IsStrike || secondRoll.HasValue; }
         }
 
-        public bool IsSpare {get { return this.firstRoll + this.secondRoll == 10 && this.secondRoll > 0; }
-        }
-
+        public bool IsSpare {get { return this.firstRoll + this.secondRoll == 10 && this.secondRoll > 0; }}
         public bool IsStrike { get { return this.firstRoll == 10; } }
-        public int FrameScore { get { return firstRoll + (secondRoll.HasValue ? secondRoll.Value : 0) + bonus; } }
+        public int FrameScore { get { return firstRoll + SecondRollValue() + bonus; } }
+
+        private int SecondRollValue()
+        {
+            return secondRoll.HasValue ? secondRoll.Value : 0;
+        }
     }
 }
