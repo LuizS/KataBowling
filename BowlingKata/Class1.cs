@@ -61,7 +61,7 @@ namespace BowlingKata
             Game game = new Game();
             for (int i = 1; i <= 12; i++)
                 game.Roll(10);
-
+            Assert.That(game.Frames.Count,Is.EqualTo(10));
             Assert.That(game.Score, Is.EqualTo(300));
         }
     }
