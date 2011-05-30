@@ -54,6 +54,16 @@ namespace BowlingKata
 
             Assert.That(game.Score, Is.EqualTo(49));
         }
+
+        [Test]
+        public void Score_PerfectGame_ResultIs300()
+        {
+            Game game = new Game();
+            for (int i = 1; i <= 12; i++)
+                game.Roll(10);
+
+            Assert.That(game.Score, Is.EqualTo(300));
+        }
     }
 
 
